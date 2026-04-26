@@ -1,0 +1,4 @@
+“CryptContext is used to manage password hashing algorithms like bcrypt, enabling secure hashing and easy migration between algorithms.”
+
+
+“Run the HTTP Bearer security dependency, extract the Authorization header, convert it into an HTTPAuthorizationCredentials object, and inject it into this function.”
