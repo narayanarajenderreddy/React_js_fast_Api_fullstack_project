@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import ProjectsDashboard from "./pages/ProjectsDashboard";
 
 function App(){
   return (
@@ -38,7 +39,18 @@ function App(){
     }
     />
 
+    <Route
+      path="/projects"
+      element={
+        <ProtectedRoute>
+        <ProjectsDashboard/>
+        </ProtectedRoute>
+      }
+    />
+
     </Routes>
+
+    
 
     </BrowserRouter>
 
