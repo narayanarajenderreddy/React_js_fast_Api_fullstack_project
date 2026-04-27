@@ -15,3 +15,11 @@ class Organization(Base):
         "Membership",
         back_populates="organization"
     )
+    
+    projects = relationship(
+        "Project",
+        back_populates="organization"
+    )
+    
+    
+    
