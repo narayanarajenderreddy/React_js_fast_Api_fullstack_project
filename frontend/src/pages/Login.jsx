@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Login(){
     const[email,SetEmail] = useState("");
     const[password,setPassword] = useState("");
-    const{login} = useContext(AuthContext);
+    const{login,SetUser,afterLogin} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSubmit = async(e) => {
@@ -18,6 +18,14 @@ function Login(){
         })
         console.log("response data:",res.data);
         login(res.data.access_token);
+
+
+        const userData  = await api.get("auth/me");
+        console.log("user data from login form:",userData.data);
+        afterLogin(userData.data);
+        // SetUser(userData.data);
+
+        // SetUser(res.data.user);
         navigate("/dashboard");
     };
 

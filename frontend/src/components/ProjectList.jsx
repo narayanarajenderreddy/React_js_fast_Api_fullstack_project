@@ -1,8 +1,13 @@
 import useProjectStore from "../store/projectStore";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "../context/AuthContext";
 
 
 function ProjectList(){
+const navigate = useNavigate();
+const {user} = useContext(AuthContext);
 
 const projects=
 useProjectStore(
@@ -89,10 +94,24 @@ onClick={()=>startEdit(project)}
 Edit
 </button>
 
+{user?.role === "admin" && (
+
 <button
-onClick={()=>deleteProject(project.id)}
+onClick={()=>
+ deleteProject(project.id)
+}
 >
 Delete
+</button>
+
+)}
+
+<button
+onClick={() =>
+ navigate(`/projects/${project.id}/tasks`)
+}
+>
+View Tasks
 </button>
 
 </>

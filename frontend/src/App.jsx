@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import ProjectsDashboard from "./pages/ProjectsDashboard";
+import TasksPage from "./pages/TasksPage";
 
 function App(){
   return (
@@ -48,8 +49,19 @@ function App(){
       }
     />
 
+    <Route
+      path="/projects/:projectId/tasks"
+      element={
+        <ProtectedRoute>
+          <TasksPage/>
+        </ProtectedRoute>
+      }
+    />
+
+
     </Routes>
 
+    
     
 
     </BrowserRouter>
