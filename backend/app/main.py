@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.v1.endpoints import auth
 from app.api.v1.endpoints import projects
+from app.api.v1.endpoints import tasks
 
 app = FastAPI()
 
@@ -19,4 +20,6 @@ app.add_middleware(
 
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["Auth"])
 
-app.include_router( projects.router, prefix="/api/v1/Projects", tags=["Projects"])
+app.include_router(projects.router, prefix="/api/v1/Projects", tags=["Projects"])
+
+app.include_router(tasks.router,prefix="/api/v1/tasks",tags = ["Tasks"])

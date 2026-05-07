@@ -22,6 +22,10 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         raise HTTPException(status_code = 401,detail = "invalid token")
     result = await db.execute(select(User).where(User.email == user_id))
     user = result.scalar_one_or_none()
+    member_role = await db.execute(select(Membership).where(Membership.user_id == user.id))
+    loginuserrole = member_role.scalar_one_or_none()
+
+    user.role = loginuserrole.role if loginuserrole else None
     #print("user detatils:",user)
     if not user:
         raise HTTPException(status_code = 404,detail = "user not found")

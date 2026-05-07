@@ -21,3 +21,9 @@ class Project(Base):
        "Organization",
        back_populates="projects"
     )
+    
+    
+    tasks = relationship(
+    "Task",
+    back_populates="project"
+    )

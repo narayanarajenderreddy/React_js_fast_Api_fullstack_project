@@ -4,6 +4,7 @@ from sqlalchemy import select
 
 from app.core.database import get_db
 from app.dependencies.auth import get_current_user,get_current_membership
+from app.dependencies.roles import require_role
 from app.models.membership import Membership
 
 from app.schemas.project import (ProjectCreate,ProjectResponse,ProjectDelete,ProjectUpdate)
@@ -13,7 +14,7 @@ from app.services.project_service import (create_project, deleteproject,get_proj
 router = APIRouter()
 
 @router.post("/create_new_project",response_model = ProjectResponse)
-async def create_new_project(project: ProjectCreate, db: AsyncSession = Depends(get_db), current_membership = Depends(get_current_membership)):
+async def create_new_project(project: ProjectCreate, db: AsyncSession = Depends(get_db), current_membership = Depends(get_current_membership),membership=Depends(require_role("admin"))):
     return await create_project(db=db, data=project, org_id=current_membership.org_id)
 
 @router.get("/all_projects", response_model=list[ProjectResponse])
@@ -36,7 +37,7 @@ async def update_project_endpoint(project_id:int, project: ProjectUpdate, db: As
     return updated_project
 
 @router.delete("/{project_id}")
-async def delete_project(project_id: int, db: AsyncSession = Depends(get_db)):
+async def delete_project(project_id: int, db: AsyncSession = Depends(get_db),membership=Depends(require_role("admin"))):
     deleted = await deleteproject(db=db, project_id=project_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Project not found")
